@@ -7,6 +7,12 @@ class Images {
   static String get backgroundImg1 => 'background_img1'.png;
   static String get backgroundImgLogo => 'background_img_logo'.png;
   static String get backgroundImgLogo1 => 'background_img_logo1'.png;
+  static String get user => 'user'.png;
+
+  static String get money => 'money'.png;
+  static String get clock => 'clock'.png;
+  static String get navigation => 'navi'.png;
+  static String get carimage => 'carimage'.png;
 
   static String get update => 'update'.png;
   static String get maintenance => 'maintenance'.png;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/src/splash/controller/splash_controller.dart';
+import 'package:hellotaxi/utils/core/helper/route_helper.dart';
 import 'package:hellotaxi/utils/images.dart';
 import 'package:hellotaxi/utils/widgets/loading_indicator.dart';
 
@@ -22,6 +23,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
       //   MaterialPageRoute(
       //       builder: (context) => MobileOtpPage()), // Ensure `MapPage` exists
       // );
+      Get.toNamed(RouteHelper.getOtpVerifyRoute());
     }
   }
 

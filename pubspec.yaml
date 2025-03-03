@@ -57,6 +57,9 @@ dependencies:
   url_launcher:
   pin_code_fields:
   
+  location:
+  google_maps_flutter:
+
 
 dev_dependencies:
   flutter_test:

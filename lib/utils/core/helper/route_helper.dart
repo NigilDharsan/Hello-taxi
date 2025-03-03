@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hellotaxi/src/Dashboard/dashBoardScreen.dart';
+import 'package:hellotaxi/src/Profile/EditProfileScreen.dart';
+import 'package:hellotaxi/src/Profile/profileScreen.dart';
+import 'package:hellotaxi/src/RiderHistory/rideCompleteDetails.dart';
+import 'package:hellotaxi/src/RiderHistory/riderHistoryScreen.dart';
 import 'package:hellotaxi/src/auth/signIn/onboard_screen.dart';
+import 'package:hellotaxi/src/auth/signIn/otpVerifyScreen.dart';
 import 'package:hellotaxi/src/common/update_screen.dart';
 import 'package:hellotaxi/src/splash/controller/splash_controller.dart';
 import 'package:hellotaxi/src/splash/splash_screen.dart';
@@ -16,17 +22,48 @@ class RouteHelper {
   static const String signUpEstablish = '/sign-up-establish';
   static const String addLocation = '/add-location';
   static const String onBoardScreen = '/onboard-screen';
+  static const String otpVerifyScreen = '/otpVerifyScreen';
+  static const String dashboardscreen = '/dashboardscreen';
+  static const String profilescreen = '/profilescreen';
+  static const String editprofilescreen = '/editprofilescreen';
+
+  static const String riderhistoryscreen = '/riderhistoryscreen';
+  static const String ridecompletedetails = '/ridecompletedetails';
 
   static String getInitialRoute() => initial;
   static String getSplashRoute() => splash;
   static String getLanguageRoute(String page) => '$language?page=$page';
   static String getSignInRoute() => onBoardScreen;
+  static String getOtpVerifyRoute() => otpVerifyScreen;
+  static String getDashBoardRoute() => dashboardscreen;
+  static String getProfileRoute() => profilescreen;
+  static String getEditProfileRoute() => editprofilescreen;
+  static String getRiderHistoryRoute() => riderhistoryscreen;
+  static String getRideCompleteDetailsRoute() => ridecompletedetails;
+
   static String getAddLocation(int id, int accountId) =>
       '$addLocation?userId=$id&accountId=$accountId';
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: onBoardScreen, page: () => getRoute(const OnboardScreen())),
+    GetPage(
+        name: otpVerifyScreen, page: () => getRoute(const Otpverifyscreen())),
+
+    GetPage(
+        name: dashboardscreen, page: () => getRoute(const Dashboardscreen())),
+
+    GetPage(name: profilescreen, page: () => getRoute(const ProfileScreen())),
+    GetPage(
+        name: riderhistoryscreen,
+        page: () => getRoute(const RiderHistoryScreen())),
+
+    GetPage(
+        name: editprofilescreen,
+        page: () => getRoute(const EditProfileScreen())),
+    GetPage(
+        name: ridecompletedetails,
+        page: () => getRoute(const RideCompleteDetails())),
 
     // GetPage(
     //     name: addLocation,
