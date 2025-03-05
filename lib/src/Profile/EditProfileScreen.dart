@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hellotaxi/utils/core/helper/route_helper.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -109,7 +108,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             color: Colors.white,
           ),
           onPressed: () {
-            Get.toNamed(RouteHelper.getProfileRoute());
+            Get.back();
           },
         ),
         title: const Text(

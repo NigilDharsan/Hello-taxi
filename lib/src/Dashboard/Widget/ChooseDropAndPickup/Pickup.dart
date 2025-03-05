@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hellotaxi/src/Dashboard/Widget/ChooseDropAndPickup/chooseLocation.dart';
 
 class PickupPage extends StatelessWidget {
   const PickupPage({super.key});
@@ -10,35 +11,59 @@ class PickupPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Pickup',
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+          Row(
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Aligns items properly
+            children: [
+              const Icon(Icons.location_on, color: Colors.black, size: 30),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start, // Aligns text to the left
+                  children: [
+                    const Text(
+                      'Pickup at....',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        selectLocation(context, true);
+                      },
+                      child: const Text(
+                        'Enter the Pickup location',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
+                            color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 5),
-          const Text(
-            'Enter the pickup location',
-            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-          ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 1),
           Row(
             children: [
               const SizedBox(width: 20),
               Expanded(
                 child: CustomPaint(
                   size: const Size(double.infinity, 2), // Full width
-                  painter: DottedPainter(isHorizontal: true), // Pass required parameter
+                  painter: DottedPainter(
+                      isHorizontal: true), // Pass required parameter
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          // const SizedBox(height: 10),
           Row(
             children: [
-              const SizedBox(width: 10),
+              const SizedBox(width: 15),
               Column(
                 children: [
                   CustomPaint(
-                    size: const Size(2, 35),
+                    size: const Size(1, 40),
                     painter: DottedLinePainter(isHorizontal: false),
                   ),
                 ],
@@ -53,6 +78,7 @@ class PickupPage extends StatelessWidget {
 
 class DottedPainter extends CustomPainter {
   final bool isHorizontal;
+
   DottedPainter({required this.isHorizontal});
 
   @override
@@ -66,12 +92,14 @@ class DottedPainter extends CustomPainter {
 
     if (isHorizontal) {
       while (startX < size.width) {
-        canvas.drawLine(Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
+        canvas.drawLine(
+            Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
         startX += dashWidth + dashSpace;
       }
     } else {
       while (startY < size.height) {
-        canvas.drawLine(Offset(0, startY), Offset(0, startY + dashWidth), paint);
+        canvas.drawLine(
+            Offset(0, startY), Offset(0, startY + dashWidth), paint);
         startY += dashWidth + dashSpace;
       }
     }
@@ -81,9 +109,9 @@ class DottedPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-// Vertical Dotted Line Painter (Alternative for clarity)
 class DottedLinePainter extends CustomPainter {
   final bool isHorizontal;
+
   DottedLinePainter({required this.isHorizontal});
 
   @override

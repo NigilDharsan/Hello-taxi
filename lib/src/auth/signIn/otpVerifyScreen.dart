@@ -61,7 +61,7 @@ class _OtpverifyscreenState extends State<Otpverifyscreen> {
     //   MaterialPageRoute(
     //       builder: (context) => MapPage()), // Ensure `MapPage` exists
     // );
-    Get.offAllNamed(RouteHelper.getDashBoardRoute());
+    Get.offAllNamed(RouteHelper.getUserInfoRoute());
   }
 
   @override

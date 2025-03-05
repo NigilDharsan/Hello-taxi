@@ -120,7 +120,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         _drawerItem(
                           icon: Icons.call,
                           text: 'Customer Care',
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(RouteHelper.getCustomerCareRoute());
+                          },
                         ),
                         _drawerItem(
                           icon: Icons.notifications,
