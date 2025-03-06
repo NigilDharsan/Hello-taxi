@@ -59,7 +59,9 @@ dependencies:
   
   location:
   google_maps_flutter:
-
+  flutter_polyline_points:
+  flutter_typeahead:
+  sliding_up_panel:
 
 dev_dependencies:
   flutter_test:

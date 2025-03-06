@@ -2,6 +2,8 @@ class Images {
   static const String logo = 'assets/logo/logo.png';
   static const String hello_axi_logo =
       'assets/images/hello_taxi_appicon_blue.png';
+  static const String riderSearch = 'assets/images/riderSearch.gif';
+  static const String customer_care = 'assets/images/customer_care.jpg';
 
   static String get backgroundImg => 'background_img'.png;
   static String get backgroundImg1 => 'background_img1'.png;

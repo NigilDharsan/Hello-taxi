@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hellotaxi/src/Dashboard/Controller/dashBoardController.dart';
 import 'package:hellotaxi/src/auth/controller/auth_controller.dart';
 import 'package:hellotaxi/src/auth/repository/auth_repo.dart';
 import 'package:hellotaxi/src/splash/controller/splash_controller.dart';
@@ -15,7 +16,7 @@ class InitialBinding extends Bindings {
         authRepo:
             AuthRepo(sharedPreferences: Get.find(), apiClient: Get.find())));
 
-    // Get.lazyPut(() => LanguageController());
+    Get.lazyPut(() => DashBoardController());
     // Get.lazyPut(() => SignalRServices());
     // Get.lazyPut(() => StatusController());
     // Get.lazyPut(() => InAppCallController(

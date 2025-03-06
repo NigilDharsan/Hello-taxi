@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hellotaxi/src/Choose%20Map/Choose_map.dart';
+import 'package:hellotaxi/src/Customer%20care/CustomerCareScreen.dart';
 import 'package:hellotaxi/src/Dashboard/dashBoardScreen.dart';
 import 'package:hellotaxi/src/Profile/EditProfileScreen.dart';
 import 'package:hellotaxi/src/Profile/profileScreen.dart';
+import 'package:hellotaxi/src/Ride%20Completed/rideCompletedScreen.dart';
+import 'package:hellotaxi/src/Rider%20Booking/bookingScreen.dart';
 import 'package:hellotaxi/src/RiderHistory/rideCompleteDetails.dart';
 import 'package:hellotaxi/src/RiderHistory/riderHistoryScreen.dart';
 import 'package:hellotaxi/src/auth/signIn/onboard_screen.dart';
 import 'package:hellotaxi/src/auth/signIn/otpVerifyScreen.dart';
+import 'package:hellotaxi/src/auth/signIn/userInfoScreen.dart';
 import 'package:hellotaxi/src/common/update_screen.dart';
 import 'package:hellotaxi/src/splash/controller/splash_controller.dart';
 import 'package:hellotaxi/src/splash/splash_screen.dart';
@@ -29,6 +34,11 @@ class RouteHelper {
 
   static const String riderhistoryscreen = '/riderhistoryscreen';
   static const String ridecompletedetails = '/ridecompletedetails';
+  static const String choosemapscreen = '/choosemapscreen';
+  static const String bookingscreen = '/bookingscreen';
+  static const String ridecompletedscreen = '/ridecompletedscreen';
+  static const String userinfoscreen = '/userinfoscreen';
+  static const String customercarescreen = '/customercarescreen';
 
   static String getInitialRoute() => initial;
   static String getSplashRoute() => splash;
@@ -40,7 +50,11 @@ class RouteHelper {
   static String getEditProfileRoute() => editprofilescreen;
   static String getRiderHistoryRoute() => riderhistoryscreen;
   static String getRideCompleteDetailsRoute() => ridecompletedetails;
-
+  static String getChooseMapRoute() => choosemapscreen;
+  static String getBookingRoute() => bookingscreen;
+  static String getRideCompleteRoute() => ridecompletedscreen;
+  static String getUserInfoRoute() => userinfoscreen;
+  static String getCustomerCareRoute() => customercarescreen;
   static String getAddLocation(int id, int accountId) =>
       '$addLocation?userId=$id&accountId=$accountId';
 
@@ -64,6 +78,17 @@ class RouteHelper {
     GetPage(
         name: ridecompletedetails,
         page: () => getRoute(const RideCompleteDetails())),
+    GetPage(
+        name: choosemapscreen,
+        page: () => getRoute(const Choose_Mapscreen(
+              isPickup: false,
+            ))),
+    GetPage(name: bookingscreen, page: () => getRoute(const BookingScreen())),
+    GetPage(
+        name: ridecompletedscreen,
+        page: () => getRoute(const RideCompletedScreen())),
+    GetPage(name: userinfoscreen, page: () => const UserInfoScreen()),
+    GetPage(name: customercarescreen, page: () => const CustomerCareScreen()),
 
     // GetPage(
     //     name: addLocation,

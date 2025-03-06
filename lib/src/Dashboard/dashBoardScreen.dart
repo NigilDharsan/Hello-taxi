@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart' as geo;
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hellotaxi/src/Dashboard/Controller/dashBoardController.dart';
+import 'package:hellotaxi/src/Dashboard/Widget/Book%20Rider/book_rider.dart';
+import 'package:hellotaxi/src/Dashboard/Widget/ChooseDropAndPickup/MainDesign.dart';
 import 'package:hellotaxi/src/Dashboard/Widget/DrawerPage.dart';
-import 'package:hellotaxi/src/Dashboard/Widget/Drop.dart';
-import 'package:hellotaxi/src/Dashboard/Widget/Pickup.dart';
-import 'package:hellotaxi/utils/images.dart';
+import 'package:hellotaxi/src/RiderSearch/riderSearchScreen.dart';
+import 'package:location/location.dart' as loc;
 
 class Dashboardscreen extends StatefulWidget {
   const Dashboardscreen({super.key});
@@ -23,6 +27,12 @@ class _DashboardscreenState extends State<Dashboardscreen> {
   bool isSelected = false;
   bool ispinkSelected = false;
 
+  loc.Location _location = loc.Location();
+  LatLng _currentPosition =
+      const LatLng(37.7749, -122.4194); // Default: San Francisco
+  LatLng _destination = const LatLng(37.7849, -122.4094); // Example destination
+  List<LatLng> _routeCoords = [];
+
   @override
   void initState() {
     super.initState();
@@ -31,34 +41,71 @@ class _DashboardscreenState extends State<Dashboardscreen> {
 
   Future<void> _getUserLocation() async {
     bool serviceEnabled;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    geo.LocationPermission permission;
+    serviceEnabled = await geo.Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       print("Location services are disabled.");
       return;
     }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
+    permission = await geo.Geolocator.checkPermission();
+    if (permission == geo.LocationPermission.denied) {
+      permission = await geo.Geolocator.requestPermission();
+      if (permission == geo.LocationPermission.denied) {
         print("Location permissions are denied.");
         return;
       }
     }
 
-    if (permission == LocationPermission.deniedForever) {
+    if (permission == geo.LocationPermission.deniedForever) {
       print("Location permissions are permanently denied.");
       return;
     }
 
     // Get current position
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    geo.Position position = await geo.Geolocator.getCurrentPosition(
+        desiredAccuracy: geo.LocationAccuracy.high);
 
     setState(() {
       _initialPosition = LatLng(position.latitude, position.longitude);
       _isLoading = false; // Map is ready
     });
+  }
+
+  void _startLiveTracking() {
+    _location.onLocationChanged.listen((loc.LocationData locationData) {
+      if (locationData.latitude != null && locationData.longitude != null) {
+        setState(() {
+          _currentPosition =
+              LatLng(locationData.latitude!, locationData.longitude!);
+        });
+
+        mapController?.animateCamera(
+          CameraUpdate.newLatLng(_currentPosition),
+        );
+      }
+    });
+  }
+
+  // Fetch route points using Google Directions API
+  void _getRoutePoints() async {
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleApiKey: "AIzaSyAq4kppEUeT17-uW7Uly3te60kJDS2vxt8",
+      request: PolylineRequest(
+        origin:
+            PointLatLng(_currentPosition.latitude, _currentPosition.longitude),
+        destination: PointLatLng(_destination.latitude, _destination.longitude),
+        mode: TravelMode.driving,
+        wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")],
+      ),
+    );
+    print(result.points);
+    if (result.points.isNotEmpty) {
+      setState(() {
+        _routeCoords =
+            result.points.map((p) => LatLng(p.latitude, p.longitude)).toList();
+      });
+    }
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -87,104 +134,65 @@ class _DashboardscreenState extends State<Dashboardscreen> {
         }
         return true;
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: <Widget>[
-            // GoogleMap(
-            //   initialCameraPosition: CameraPosition(
-            //     target: _initialPosition,
-            //     zoom: 15,
-            //   ),
-            //   onMapCreated: _onMapCreated,
-            //   myLocationEnabled: true, // Enables user location
-            //   mapType: MapType.normal, // Options: normal, satellite, terrain
-            // ),
-            Positioned(
-              left: 20,
-              right: 20,
-              bottom: 40, // Ensures it stays at the bottom
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10.0,
-                    ),
-                  ],
+      child: GetBuilder<DashBoardController>(builder: (controller) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            children: <Widget>[
+              GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: _initialPosition,
+                  zoom: 15,
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  // Keeps it only as tall as needed
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(6),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            ispinkSelected = !ispinkSelected;
-                          });
-                          // Navigator.of(context).pushReplacement(
-                          //   MaterialPageRoute(builder: (context) => const DrawerPage()),
-                          // );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(1),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(color: Colors.black),
-                            color:
-                                ispinkSelected ? Colors.pink[50] : Colors.white,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(Images.carimage,
-                                  width: 50, height: 50),
-                              const SizedBox(width: 8.0),
-                              // Space between image and text
-                              const Text(
-                                'Local',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const PickupPage(), // These pages are properly placed
-                    const DropPage(),
-                  ],
-                ),
+                onMapCreated: _onMapCreated,
+                myLocationEnabled: true, // Enables user location
+                mapType: MapType.normal, // Options: normal, satellite, terrain
               ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).padding.top + 20,
-              left: 15,
-              child: Builder(
-                builder: (context) => Container(
-                  decoration: BoxDecoration(
-                    color: Colors.indigo[900],
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.menu),
-                    color: Colors.white,
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
+              Positioned(
+                  left: 20,
+                  right: 20,
+                  bottom: 40, // Ensures it stays at the bottom
+                  child: Obx(() {
+                    return controller.screenType.value == ""
+                        ? MainDesign()
+                        : controller.screenType.value == "Rider Search"
+                            ? RiderSearchScreen()
+                            : Cash_Screen();
+                  })),
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 20,
+                left: 15,
+                child: Builder(
+                  builder: (context) => Container(
+                    decoration: BoxDecoration(
+                      color: Colors.indigo[900],
+                      shape: BoxShape.circle,
+                    ),
+                    child: Obx(() {
+                      return controller.screenType.value == ""
+                          ? IconButton(
+                              icon: const Icon(Icons.menu),
+                              color: Colors.white,
+                              onPressed: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                            )
+                          : IconButton(
+                              icon: const Icon(Icons.arrow_back),
+                              color: Colors.white,
+                              onPressed: () {
+                                controller.screenType.value = "";
+                              },
+                            );
+                    }),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        drawer: DrawerPage(),
-      ),
+            ],
+          ),
+          drawer: DrawerPage(),
+        );
+      }),
     );
   }
 }
