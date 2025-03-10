@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await GetStorage.init();
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +29,14 @@ Future<void> main() async {
   ]);
 
   Get.put(LoaderController()); //
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.indigo, // Set the status bar color
+    statusBarIconBrightness: Brightness.light, // Light icons for contrast
+    systemNavigationBarColor: Colors.white, // Make bottom navigation bar transparent
+    systemNavigationBarIconBrightness: Brightness.light,
+    systemNavigationBarDividerColor: Colors.white, // Remove divider color
+  ));
 
   runApp(const MyApp());
 }

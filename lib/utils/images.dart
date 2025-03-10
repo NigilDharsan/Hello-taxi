@@ -15,6 +15,13 @@ class Images {
   static String get clock => 'clock'.png;
   static String get navigation => 'navi'.png;
   static String get carimage => 'carimage'.png;
+  static String get dogimage => 'dog'.png;
+  static String get rupees => 'money2'.png;
+  static String get sos => 'sos'.png;
+  static String get ubar => 'ubarcar'.png;
+  static String get noficationimage1 => 'pillar_crane_code_composition'.png;
+  static String get splashscreen => 'hellotaxi_mobile_screen'.png;
+
 
   static String get update => 'update'.png;
   static String get maintenance => 'maintenance'.png;
@@ -23,6 +30,8 @@ class Images {
 
   static String get notification => 'notification'.svg;
   static String get search => 'search'.svg;
+  static String get pet => 'group_pets'.svg;
+
 
   static String get chat => 'chat'.svg;
 

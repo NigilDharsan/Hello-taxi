@@ -1,6 +1,8 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/utils/images.dart';
+import 'package:hellotaxi/utils/styles.dart';
 
 class RideCompleteDetails extends StatefulWidget {
   const RideCompleteDetails({super.key});
@@ -42,23 +44,18 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
+          children: [
+            const Text(
               'Sat, Feb 22, 01:32 pm',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontFamily: 'Arial',
-              ),
+              style: ubuntuBold,
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Text(
               'HT250222487414',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.normal,
-                color: Colors.white70,
+                color: Colors.grey[200],
                 fontFamily: 'Arial',
               ),
             ),
@@ -94,15 +91,12 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
                             children: const [
                               Text(
                                 'HTD10009',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style:logBold,
                               ),
                               SizedBox(height: 4.0),
                               Text(
                                 'TN57 HJ 6789',
-                                style: TextStyle(fontSize: 13),
+                                style: colorBold,
                               ),
                             ],
                           ),
@@ -120,16 +114,15 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
                                 'Completed',
                                 style: TextStyle(
                                   color: Colors.green,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(
-                                  width: 5), // Spacing between text and icon
+                              SizedBox(width: 5), // Spacing between text and icon
                               Icon(
                                 Icons.check_circle, // ✅ Tick inside a circle
                                 color: Colors.green,
-                                size: 18,
+                                size: 20,
                               ),
                             ],
                           ),
@@ -163,7 +156,7 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
                   const Divider(),
                   const Row(
                     children: [
-                      Icon(Icons.location_on, color: Colors.red),
+                      Icon(Icons.radio_button_off_rounded, color: Colors.red,size: 30,),
                       SizedBox(width: 10),
                       Expanded(
                         child: Column(
@@ -173,10 +166,7 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
                               '91, Civil Aerodrome Post, Opp, CMC, \n'
                               'Dr. Jaganathan Nagar, Coimbatore,\n'
                               'Tamil Nadu 641014, India',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: logBold,
                             ),
                           ],
                         ),
@@ -184,26 +174,29 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
                     ],
                   ),
                   const SizedBox(height: 1),
-                  Padding(
-                    padding: const EdgeInsets.all(13),
-                    child: CustomPaint(
-                      size: const Size(1, 25),
-                      painter: DottedLinePainter(),
-                    ),
+                  Row(
+                    children: [
+                      const SizedBox(width: 15),
+                      DottedLine(
+                        direction: Axis.vertical, // Set direction to vertical
+                        lineLength: 50, // Length of the line
+                        lineThickness: 2, // Thickness of the line
+                        dashLength: 6, // Length of each dash
+                        dashGapLength: 2, // Gap between dashes
+                        dashColor: Colors.black, // Color of the dashes
+                      ),
+                    ],
                   ),
                   const Row(
                     children: [
-                      Icon(Icons.location_on, color: Colors.green),
+                      Icon(Icons.radio_button_off_rounded, color: Colors.green,size: 30,),
                       SizedBox(width: 10),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Singanallur Bus stand',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                )),
+                                style: logBold),
                           ],
                         ),
                       ),
@@ -212,26 +205,18 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
                   const Divider(),
                   const Text(
                     'Payment Details',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: colorBold,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text('Total Payable',
-                          style: TextStyle(fontSize: 15)),
+                          style: level),
                       TextButton(
                         onPressed: () {},
                         child: Text(
                           "₹0.00",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: rupees,
                         ),
                       ),
                     ],
@@ -239,11 +224,7 @@ class _RideCompleteDetailsState extends State<RideCompleteDetails> {
                   const Divider(),
                   const Text(
                     'Rating',
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: colorBold,
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -276,14 +257,14 @@ Widget _buildInfoCard(String imagePath, String text) {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            Image.asset(imagePath, width: 30, height: 30),
+            Image.asset(imagePath, width: 50),
             const SizedBox(height: 5),
             Text(
               text,
               style: const TextStyle(
                   color: Colors.black,
                   fontSize: 15,
-                  fontWeight: FontWeight.w400),
+                  fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -292,21 +273,3 @@ Widget _buildInfoCard(String imagePath, String text) {
   );
 }
 
-class DottedLinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..color = Colors.indigo
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke;
-
-    double dashHeight = 5, dashSpace = 3, startY = 0;
-    while (startY < size.height) {
-      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashHeight), paint);
-      startY += dashHeight + dashSpace;
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-}

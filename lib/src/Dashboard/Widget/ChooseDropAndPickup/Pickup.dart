@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hellotaxi/src/Dashboard/Widget/ChooseDropAndPickup/chooseLocation.dart';
+import 'package:hellotaxi/utils/styles.dart';
 
 class PickupPage extends StatelessWidget {
   const PickupPage({super.key});
@@ -23,8 +24,7 @@ class PickupPage extends StatelessWidget {
                   children: [
                     const Text(
                       'Pickup at....',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                      style: rupees,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -32,10 +32,7 @@ class PickupPage extends StatelessWidget {
                       },
                       child: const Text(
                         'Enter the Pickup location',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                            color: Colors.black),
+                        style: ubuntuSemiBold,
                       ),
                     ),
                   ],
@@ -63,7 +60,7 @@ class PickupPage extends StatelessWidget {
               Column(
                 children: [
                   CustomPaint(
-                    size: const Size(1, 40),
+                    size: const Size(1, 20),
                     painter: DottedLinePainter(isHorizontal: false),
                   ),
                 ],

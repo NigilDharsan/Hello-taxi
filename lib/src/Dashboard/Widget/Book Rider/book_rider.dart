@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hellotaxi/src/Dashboard/Controller/dashBoardController.dart';
 import 'package:hellotaxi/utils/images.dart';
+import 'package:hellotaxi/utils/styles.dart';
 
 class Cash_Screen extends StatefulWidget {
   const Cash_Screen({super.key});
@@ -21,14 +22,11 @@ class _Cash_ScreenState extends State<Cash_Screen>
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return  Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 350,
-        padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
           color: Colors.grey[50],
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
@@ -40,18 +38,10 @@ class _Cash_ScreenState extends State<Cash_Screen>
           children: [
             Padding(
               padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: _buildRideOptions(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
               child: Container(
-                height: 180,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(13),
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
@@ -61,6 +51,13 @@ class _Cash_ScreenState extends State<Cash_Screen>
                 ),
                 child: Column(
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: _buildRideOptions(),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Container(
@@ -94,10 +91,7 @@ class _Cash_ScreenState extends State<Cash_Screen>
                                   const SizedBox(width: 10),
                                   const Text(
                                     'Cash',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
+                                    style: nameBold,
                                   ),
                                 ],
                               ),
@@ -108,7 +102,7 @@ class _Cash_ScreenState extends State<Cash_Screen>
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
@@ -139,10 +133,7 @@ class _Cash_ScreenState extends State<Cash_Screen>
                                 },
                                 child: const Text(
                                   "Book Ride",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                  style: conBold,
                                 ),
                               ),
                             ),
@@ -176,7 +167,6 @@ class _Cash_ScreenState extends State<Cash_Screen>
         });
       },
       child: Container(
-        width: 110,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           border: Border.all(
@@ -190,11 +180,8 @@ class _Cash_ScreenState extends State<Cash_Screen>
           children: [
             Image.asset(assetPath, width: 50, height: 50),
             const SizedBox(height: 5),
-            Text(title,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            Text(price,
-                style: const TextStyle(fontSize: 14, color: Colors.black)),
+            Text(title, style: nameBold,),
+            Text(price, style: logBold),
           ],
         ),
       ),
@@ -211,7 +198,7 @@ class _Cash_ScreenState extends State<Cash_Screen>
             color: Colors.transparent,
             child: Container(
               width: MediaQuery.of(context).size.width - 40,
-              height: 250,
+              height: 200,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -230,11 +217,7 @@ class _Cash_ScreenState extends State<Cash_Screen>
                     children: [
                       const Text(
                         'Payment Method',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: nameBold,
                       ),
                       Spacer(),
                       IconButton(
@@ -245,12 +228,10 @@ class _Cash_ScreenState extends State<Cash_Screen>
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+
                   ListTile(
-                    leading: const Icon(Icons.currency_rupee),
-                    title: const Text('Cash'),
+                    leading: Image.asset(Images.rupees, width: 50, height: 50),
+                    title:  Text('Cash',style: delta,),
                     trailing: Radio<String>(
                       value: 'Cash',
                       groupValue: "Cash", // Use nullable variable
@@ -261,9 +242,6 @@ class _Cash_ScreenState extends State<Cash_Screen>
                         });
                       },
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(10),
@@ -289,10 +267,7 @@ class _Cash_ScreenState extends State<Cash_Screen>
                         },
                         child: const Text(
                           "Done",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                          style: conBold,
                         ),
                       ),
                     ),

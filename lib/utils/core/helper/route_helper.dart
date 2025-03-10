@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hellotaxi/src/Choose%20Map/Choose_map.dart';
 import 'package:hellotaxi/src/Customer%20care/CustomerCareScreen.dart';
 import 'package:hellotaxi/src/Dashboard/dashBoardScreen.dart';
+import 'package:hellotaxi/src/Notification/NotificationScreen.dart';
 import 'package:hellotaxi/src/Profile/EditProfileScreen.dart';
 import 'package:hellotaxi/src/Profile/profileScreen.dart';
 import 'package:hellotaxi/src/Ride%20Completed/rideCompletedScreen.dart';
@@ -21,7 +22,6 @@ class RouteHelper {
   static const String initial = '/';
   static const String splash = '/splash';
   static const String signIn = '/onboardscreen';
-
   static const String language = '/language';
   static const String signUp = '/sign-up';
   static const String signUpEstablish = '/sign-up-establish';
@@ -35,10 +35,12 @@ class RouteHelper {
   static const String riderhistoryscreen = '/riderhistoryscreen';
   static const String ridecompletedetails = '/ridecompletedetails';
   static const String choosemapscreen = '/choosemapscreen';
-  static const String bookingscreen = '/bookingscreen';
+  static const String bookingscreen = '/booking screen';
   static const String ridecompletedscreen = '/ridecompletedscreen';
   static const String userinfoscreen = '/userinfoscreen';
   static const String customercarescreen = '/customercarescreen';
+  static const String notificationcreen = '/notificationscreen';
+
 
   static String getInitialRoute() => initial;
   static String getSplashRoute() => splash;
@@ -55,40 +57,26 @@ class RouteHelper {
   static String getRideCompleteRoute() => ridecompletedscreen;
   static String getUserInfoRoute() => userinfoscreen;
   static String getCustomerCareRoute() => customercarescreen;
-  static String getAddLocation(int id, int accountId) =>
-      '$addLocation?userId=$id&accountId=$accountId';
+  static String getNotificationRoute() => notificationcreen;
+
+  static String getAddLocation(int id, int accountId) => '$addLocation?userId=$id&accountId=$accountId';
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: onBoardScreen, page: () => getRoute(const OnboardScreen())),
-    GetPage(
-        name: otpVerifyScreen, page: () => getRoute(const Otpverifyscreen())),
-
-    GetPage(
-        name: dashboardscreen, page: () => getRoute(const Dashboardscreen())),
-
+    GetPage(name: otpVerifyScreen, page: () => getRoute(const Otpverifyscreen())),
+    GetPage(name: dashboardscreen, page: () => getRoute(const Dashboardscreen())),
     GetPage(name: profilescreen, page: () => getRoute(const ProfileScreen())),
-    GetPage(
-        name: riderhistoryscreen,
-        page: () => getRoute(const RiderHistoryScreen())),
-
-    GetPage(
-        name: editprofilescreen,
-        page: () => getRoute(const EditProfileScreen())),
-    GetPage(
-        name: ridecompletedetails,
-        page: () => getRoute(const RideCompleteDetails())),
-    GetPage(
-        name: choosemapscreen,
-        page: () => getRoute(const Choose_Mapscreen(
-              isPickup: false,
-            ))),
+    GetPage(name: riderhistoryscreen, page: () => getRoute(const RiderHistoryScreen())),
+    GetPage(name: editprofilescreen, page: () => getRoute(const EditProfileScreen())),
+    GetPage(name: ridecompletedetails, page: () => getRoute(const RideCompleteDetails())),
+    GetPage(name: choosemapscreen, page: () => getRoute(const Choose_Mapscreen(isPickup: false),)),
     GetPage(name: bookingscreen, page: () => getRoute(const BookingScreen())),
-    GetPage(
-        name: ridecompletedscreen,
-        page: () => getRoute(const RideCompletedScreen())),
+    GetPage(name: ridecompletedscreen, page: () => getRoute(const RideCompletedScreen())),
     GetPage(name: userinfoscreen, page: () => const UserInfoScreen()),
     GetPage(name: customercarescreen, page: () => const CustomerCareScreen()),
+    GetPage(name: notificationcreen, page: () => const NotificationScreen()),
+
 
     // GetPage(
     //     name: addLocation,

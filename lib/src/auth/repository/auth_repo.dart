@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hellotaxi/src/auth/model/profile_model.dart';
 import 'package:hellotaxi/utils/app_constants.dart';
 import 'package:hellotaxi/utils/data/provider/client_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,17 @@ class AuthRepo {
 
   AuthRepo({required this.apiClient, required this.sharedPreferences});
 
+
+
+  Future<Response?> getUserProfile() async {
+    try {
+      return await apiClient.getData("https://yourapi.com/get-profile");
+    } catch (e) {
+      print("Error fetching user profile: $e");
+      return null;
+    }
+  }
+
   Future<Response?> validateUser(String email) async {
     Map<String, String> headers = {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -22,21 +34,18 @@ class AuthRepo {
   }
 
   Future<Response?> login(
-      {required String email, required String password}) async {
+      {  required String mobileNumber}) async {
     Map<String, String> headers = {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       'Accept': 'application/json',
     };
 
-    //Ynl1ZnVlbC1zcGEtY2xpZW50LXB3ZDpxbjlJZXlSV0gxbUV1RE1JNHJKZ0FVVFYwZXdCdkJWNQ==
-
+    // Ynl1ZnVlbC1zcGEtY2xpZW50LXB3ZDpxbjlJZXlSV0gxbUV1RE1JNHJKZ0FVVFYwZXdCdkJWNQ==
+    //
     // byufuel-spa-client-mob-pwd' + ':' + 'AkfoTMTmUmPC6oWK0N2a8eaNNIUANMuW',
 
     var body = {
-      "grant_type": "password",
-      "password": password,
-      "scope": "openid profile email byufuel-api offline_access",
-      "username": email
+      "mobileno": mobileNumber,
     };
 
     String encodedBody = body.entries
@@ -44,10 +53,45 @@ class AuthRepo {
             '${Uri.encodeComponent(entry.key)}=${Uri.encodeComponent(entry.value)}')
         .join('&');
 
-    return await apiClient.postLoginData(Config.baseUrl, encodedBody,
+    return await apiClient.postLoginData(AppConstants.getPhoneLoginOTP, encodedBody,
         headers: headers);
   }
 
+  Future<Response?> editProfile(ProfileData user) async {
+    Map<String, String> headers = {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      'Accept': 'application/json',
+    };
+
+    var body = {
+      "mobileno": user.mobile ?? "",
+      "name": user.firstname ?? "",
+      "lastname": user.lastname ?? "",
+      "email": user.email ?? "",
+      "gender": user.gender ?? "",
+    };
+
+    String encodedBody = body.entries
+        .map((entry) =>
+    '${Uri.encodeComponent(entry.key)}=${Uri.encodeComponent(entry.value)}')
+        .join('&');
+
+    return await apiClient.postLoginData(AppConstants.getProfile, encodedBody,
+        headers: headers);
+  }
+  Future<ProfileData?> getUserModel() async {
+    Response? response = await apiClient.getData(AppConstants.getProfile);
+
+    if (response != null && response.statusCode == 200) {
+      return ProfileData.fromJson(response.body);
+    } else {
+      return null; // Return null if request fails
+    }
+  }
+
+  Future<Response?> getProfile() async {
+    return await apiClient.getData(AppConstants.getProfile);
+  }
   Future<Response?> signupVerification(
       String validateStr, String verifyStr) async {
     Map<String, String> headers = {
@@ -95,10 +139,10 @@ class AuthRepo {
   }
 
   // login
-  Future<Response?> getPhoneLoginOTP(String phoneNumber) async {
-    return await apiClient
-        .postData(AppConstants.getPhoneLoginOTP, {'phone': phoneNumber});
-  }
+  // Future<Response?> getPhoneLoginOTP(String phoneNumber) async {
+  //   return await apiClient
+  //       .postData(AppConstants.getPhoneLoginOTP, {'mobileno': phoneNumber});
+  // }
 
   Future<Response?> verifyLoginPhoneOTP(String phoneNumber, String otp) async {
     return await apiClient.postData(

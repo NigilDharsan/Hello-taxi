@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:hellotaxi/utils/images.dart';
 
 import '../../../utils/core/helper/route_helper.dart';
+import '../../../utils/styles.dart';
+import '../controller/auth_controller.dart';
+import '../model/profile_model.dart';
 
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({super.key});
@@ -15,6 +18,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  var _isLoading = false;
 
   @override
   void dispose() {
@@ -23,13 +27,42 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     super.dispose();
   }
 
-  void login() {
-    if (_formKey.currentState!.validate()) {
-      // Proceed with login
-      print("First Name: ${_firstnameController.text}");
-      print("Last Name: ${_lastnameController.text}");
+  final Map<String, String> _userData = {
+    'firstname': '',
+    'lastname': '',
+  };
 
+  Future<bool> login() async {
+    if (!_formKey.currentState!.validate()) {
+      return false; // Return false if validation fails
+    }
+    _formKey.currentState!.save();
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final updateUser = ProfileData(
+        id: 'customer_id',
+        firstname: _firstnameController.text.trim(),
+        lastname: _lastnameController.text.trim(),
+      );
+
+      await Get.find<AuthController>().editProfile();
       Get.offAllNamed(RouteHelper.getDashBoardRoute());
+
+      return true;
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to update user information.'),
+        ),
+      );
+      return false;
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -37,7 +70,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return InputDecoration(
       prefixIcon: Icon(icon, color: Colors.indigo, size: 24),
       hintText: hintText,
-      hintStyle: TextStyle(color: Colors.grey[400]),
+      hintStyle: ubuntuRegular,
       filled: true,
       fillColor: Colors.white,
       counterText: "",
@@ -60,73 +93,69 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(Images.backgroundImg1), // Background image
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      controller: _firstnameController,
-                      style: const TextStyle(color: Colors.black),
-                      decoration: inputDecoration('First Name', Icons.person),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter first name';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 15), // Added spacing
-                    TextFormField(
-                      controller: _lastnameController,
-                      style: const TextStyle(color: Colors.black),
-                      decoration: inputDecoration('Last Name', Icons.person),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter last name';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.indigo[900],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
+      body: GetBuilder<AuthController>(
+        builder: (authController) {
+          return Stack(
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          controller: _firstnameController,
+                          style: quality,
+                          decoration: inputDecoration('First Name', Icons.person),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter first name';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 15),
+                        TextFormField(
+                          controller: _lastnameController,
+                          style: quality,
+                          decoration: inputDecoration('Last Name', Icons.person),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter last name';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 60,
+                          child: ElevatedButton(
+                            onPressed: login,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.indigo[900],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            child: _isLoading
+                                ? const CircularProgressIndicator(color: Colors.white)
+                                : const Text(
+                              'Submit',
+                              style: ubuntuBold,
+                            ),
                           ),
                         ),
-                        child: const Text(
-                          'Submit',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/utils/images.dart';
+import 'package:hellotaxi/utils/styles.dart';
 
 class CustomerCareScreen extends StatefulWidget {
   const CustomerCareScreen({super.key});
@@ -24,12 +25,7 @@ class _CustomerCareScreenState extends State<CustomerCareScreen> {
         ),
         title: const Text(
           "Customer Care",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: 'Arial',
-          ),
+          style: ubuntuBold,
         ),
       ),
       body: SingleChildScrollView(
@@ -52,11 +48,7 @@ class _CustomerCareScreenState extends State<CustomerCareScreen> {
               const SizedBox(height: 20),
               const Text(
                 "We're here to help!",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+                style: nameBold,
               ),
               const SizedBox(height: 10),
               Center(
@@ -71,23 +63,20 @@ class _CustomerCareScreenState extends State<CustomerCareScreen> {
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children:  [
                       Text(
                         'For Support Team',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: nameBold,
                       ),
                       SizedBox(height: 10),
                       Text(
                         '📞 Call Us: \n0422 2000009',
-                        style: TextStyle(fontSize: 16),
+                        style: colorBold,
                       ),
                       SizedBox(height: 5),
                       Text(
                         '📧 Email Us: \nhollywoodfleets@gmail.com',
-                        style: TextStyle(fontSize: 16),
+                        style: colorBold,
                       ),
                     ],
                   ),
@@ -96,10 +85,7 @@ class _CustomerCareScreenState extends State<CustomerCareScreen> {
               const SizedBox(height: 20),
               const Text(
                 "Frequently Asked Questions (FAQs)",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: nameBold,
               ),
               const SizedBox(height: 10),
               Column(
@@ -123,9 +109,9 @@ class _CustomerCareScreenState extends State<CustomerCareScreen> {
     return ListTile(
       title: Text(
         question,
-        style: const TextStyle(fontSize: 16),
+        style: normalBold,
       ),
-      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+      trailing: const Icon(Icons.arrow_forward_ios, color: Colors.black87,size: 25,),
     );
   }
 }

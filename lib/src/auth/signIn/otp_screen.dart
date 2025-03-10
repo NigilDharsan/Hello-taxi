@@ -1,24 +1,22 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hellotaxi/utils/core/helper/route_helper.dart';
-import 'package:hellotaxi/utils/images.dart';
+import '../../../utils/images.dart';
 
-import '../../../utils/styles.dart';
+class MobileOtpPage extends StatefulWidget {
 
-class Otpverifyscreen extends StatefulWidget {
-  const Otpverifyscreen({super.key});
+  const MobileOtpPage({super.key});
 
   @override
-  State<Otpverifyscreen> createState() => _OtpverifyscreenState();
+  _MobileOtpPageState createState() => _MobileOtpPageState();
 }
 
-class _OtpverifyscreenState extends State<Otpverifyscreen> {
+class _MobileOtpPageState extends State<MobileOtpPage> {
   final List<TextEditingController> _otpControllers =
-      List.generate(4, (index) => TextEditingController());
-  final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
+  List.generate(4, (index) => TextEditingController());
+  final List<FocusNode> _focusNodes =
+  List.generate(4, (index) => FocusNode());
 
   Timer? _timer;
   int _time = 30;
@@ -60,15 +58,14 @@ class _OtpverifyscreenState extends State<Otpverifyscreen> {
 
   void submitOtp() {
     // Navigator.of(context).pushReplacement(
-    //   MaterialPageRoute(
-    //       builder: (context) => MapPage()), // Ensure `MapPage` exists
+    //   MaterialPageRoute(builder: (context) =>MapPage()), // Ensure `MapPage` exists
     // );
-    Get.offAllNamed(RouteHelper.getUserInfoRoute());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -77,7 +74,7 @@ class _OtpverifyscreenState extends State<Otpverifyscreen> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(Images.backgroundImg), // Background image
+                image: AssetImage(Images.backgroundImg1),
                 fit: BoxFit.cover,
               ),
             ),
@@ -102,12 +99,12 @@ class _OtpverifyscreenState extends State<Otpverifyscreen> {
                 const Text(
                   'Please enter the verification code sent to your number',
                   textAlign: TextAlign.center,
-                  style: ubuntuRegular,
+                  style: TextStyle(fontSize: 15, color: Colors.grey),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   'phoneNumber',
-                  style: rupees,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -118,7 +115,7 @@ class _OtpverifyscreenState extends State<Otpverifyscreen> {
                       height: 50,
                       margin: const EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
+                        border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
                       ),
@@ -132,15 +129,14 @@ class _OtpverifyscreenState extends State<Otpverifyscreen> {
                             LengthLimitingTextInputFormatter(1),
                           ],
                           textAlign: TextAlign.center,
-                          style: colorBold,
+                          style: const TextStyle(fontSize: 20, color: Colors.black),
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             counterText: '',
                           ),
                           onChanged: (value) {
                             if (value.isNotEmpty && index < 3) {
-                              FocusScope.of(context)
-                                  .requestFocus(_focusNodes[index + 1]);
+                              FocusScope.of(context).requestFocus(_focusNodes[index + 1]);
                             }
                           },
                           onSubmitted: (_) {
@@ -157,34 +153,31 @@ class _OtpverifyscreenState extends State<Otpverifyscreen> {
                   children: [
                     _time > 0
                         ? Text(
-                            'Seconds Remaining: $_time',
-                            style: List_No,
-                          )
+                      'Seconds Remaining: $_time',
+                      style: const TextStyle(fontSize: 15, color: Colors.grey),
+                    )
                         : TextButton(
-                            onPressed: startTimer,
-                            child: const Text(
-                              'Resend OTP',
-                              style:
-                              ubuntuMedium,
-                            ),
-                          ),
+                      onPressed: startTimer,
+                      child: const Text(
+                        'Resend OTP',
+                        style: TextStyle(fontSize: 15, color: Colors.grey),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
-                  height: 60,
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.indigo[900],
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                     ),
                     onPressed: submitOtp,
                     child: const Text(
                       'Verify OTP',
-                      style: ubuntuBold,
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                   ),
                 ),

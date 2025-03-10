@@ -25,7 +25,9 @@ class AppConstants {
   static const String registerWithPhone = 'register-by-phone';
   static const String verifyPhoneOTP = 'verify-phone-otp';
   static const String resendPhoneOTP = 'resend-phone-otp';
-  static const String getPhoneLoginOTP = 'get-login-otp';
+  static const String getPhoneLoginOTP = 'Customer_api/mobile_verify';
+  static const String getProfile = 'get_profile';
+
   static const String verifyLoginPhoneOTP = 'verify-login-otp';
   static const String verifyEmailOTP = 'email-verify';
   static const String resendEmailOTP = 'resend-email-otp';

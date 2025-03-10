@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:hellotaxi/src/RiderHistory/Widget/rideCancelled.dart';
 import 'package:hellotaxi/src/RiderHistory/Widget/rideCompleted.dart';
 
+import '../../utils/styles.dart';
+
 class RiderHistoryScreen extends StatefulWidget {
   const RiderHistoryScreen({super.key});
 
@@ -33,12 +35,7 @@ class _RiderHistoryScreenState extends State<RiderHistoryScreen> {
           ),
           title: const Text(
             'Ride History',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontFamily: 'Arial',
-            ),
+            style: con2Bold,
           ),
           bottom: PreferredSize(
             preferredSize:
@@ -54,7 +51,7 @@ class _RiderHistoryScreenState extends State<RiderHistoryScreen> {
                 unselectedLabelColor: Colors.black, // Unselected tab text color
                 indicatorSize: TabBarIndicatorSize.tab,
                 tabs: [
-                  Tab(text: 'COMPLETED'),
+                  Tab(text: 'COMPLETED',),
                   Tab(text: 'CANCELLED'),
                 ],
               ),

@@ -1,60 +1,37 @@
 class ProfileData {
   String? id;
-  String? firstName;
-  String? lastName;
-  String? name;
-  String? countryId;
-  String? accountTypeId;
-  String? industry;
+  String? firstname;
+  String? lastname;
   String? mobile;
-  String? mobileDialCode;
   String? email;
-  bool? isEstablishmentRequired;
-  String? gstinNumber;
+  String? gender;
+
 
   ProfileData(
       {this.id,
-      this.firstName,
-      this.lastName,
-      this.name,
-      this.countryId,
-      this.accountTypeId,
-      this.industry,
+      this.firstname,
+      this.lastname,
       this.mobile,
-      this.mobileDialCode,
-      this.email,
-      this.gstinNumber,
-      this.isEstablishmentRequired});
+        this.gender,
+      this.email});
 
   ProfileData.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    name = json['name'];
-    countryId = json['countryId'];
-    accountTypeId = json['accountTypeId'];
-    industry = json['industry'];
-    mobile = json['mobile'];
-    mobileDialCode = json['mobileDialCode'];
+    id = json['c_id'];
+    firstname = json['name'];
+    lastname = json['name'];
+    mobile = json['mobileno'];
     email = json['email'];
-    gstinNumber = json['gstinNumber'];
-    isEstablishmentRequired = json['isEstablishmentRequired'];
+    gender = json['gender'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['name'] = this.name;
-    data['countryId'] = this.countryId;
-    data['accountTypeId'] = this.accountTypeId;
-    data['industry'] = this.industry;
+    data['name'] = this.firstname;
+    data['name'] = this.lastname;
     data['mobile'] = this.mobile;
-    data['mobileDialCode'] = this.mobileDialCode;
     data['email'] = this.email;
-    data['gstinNumber'] = this.gstinNumber;
-    data['isEstablishmentRequired'] = this.isEstablishmentRequired;
+    data['gender'] = this.gender;
     return data;
   }
 }

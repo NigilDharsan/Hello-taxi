@@ -1,30 +1,42 @@
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/src/auth/repository/auth_repo.dart';
+import 'package:hellotaxi/src/auth/signIn/otpVerifyScreen.dart';
+import 'package:hellotaxi/utils/styles.dart';
 import 'package:hellotaxi/utils/widgets/custom_snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Utils/core/helper/route_helper.dart';
+import 'package:http/http.dart' as http;
+
+import '../model/profile_model.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
 
   AuthController({required this.authRepo});
 
+  final _formKey = GlobalKey<FormState>();
+
   String? _verificationId;
   bool _isOtpSent = false;
   int? _resendToken; // Used for resending OTP
-
   bool _isLoading = false;
   bool? _acceptTerms = false;
   bool hasMoreItems = true;
   bool cameFromApp = false;
 
-  bool get isLoading => _isLoading;
+  // bool get isLoading => _isLoading;
 
   bool? get acceptTerms => _acceptTerms;
 
   RxBool isEditLocation = false.obs;
+
+  var mobileNumber = ''.obs;
+  var otp = ''.obs;
+  var isLoading = false.obs;
+
 
   void toggleEditLocation(bool isEdit) {
     isEditLocation.value = isEdit;
@@ -34,8 +46,8 @@ class AuthController extends GetxController implements GetxService {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
   var emailController = TextEditingController();
-  var phoneController = TextEditingController();
-  var passwordController = TextEditingController();
+  var genderController = TextEditingController();
+  var mobileNumberController = TextEditingController();
   var confirmPasswordController = TextEditingController();
   var address = TextEditingController();
   var preferLocation = TextEditingController();
@@ -67,9 +79,10 @@ class AuthController extends GetxController implements GetxService {
   var contactNumberController = TextEditingController();
   final String _mobileNumber = '';
 
-  String get mobileNumber => _mobileNumber;
+  // String get mobileNumber => _mobileNumber;
 
   late String _emailAddress = '';
+
   String get emailAddress => _emailAddress;
 
   ///TextEditingController for new pass screen
@@ -78,10 +91,10 @@ class AuthController extends GetxController implements GetxService {
 
   ///TextEditingController for change pass screen
   final currentPasswordControllerForChangePasswordScreen =
-      TextEditingController();
+  TextEditingController();
   final newPasswordControllerForChangePasswordScreen = TextEditingController();
   final confirmPasswordControllerForChangePasswordScreen =
-      TextEditingController();
+  TextEditingController();
 
   ///TextEditingController for Mark location screen
   var addressName = TextEditingController();
@@ -164,9 +177,9 @@ class AuthController extends GetxController implements GetxService {
     firstNameController.text = '';
     lastNameController.text = '';
     emailController.text = '';
-    phoneController.text = '';
-    passwordController.text = '';
-    confirmPasswordController.text = '';
+    genderController.text = '';
+    mobileNumberController.text = '';
+    emailController.text = '';
     contactNumberController.text = '';
     newPasswordController.text = '';
     confirmNewPasswordController.text = '';
@@ -190,7 +203,7 @@ class AuthController extends GetxController implements GetxService {
   }
 
   bool _isValidPassword() {
-    return passwordController.value.text ==
+    return mobileNumberController.value.text ==
         confirmPasswordController.value.text;
   }
 
@@ -222,27 +235,71 @@ class AuthController extends GetxController implements GetxService {
     _hideKeyboard();
     _isLoading = true;
     update();
-
-    if (await validateUser(signInEmailController.text.trim())) {
-      Response? response = await authRepo.login(
-          email: _emailAddress, password: signInPasswordController.value.text);
-      if (response != null && response.statusCode == 200) {
-        print("LOGIN RESPONSE ${response.body}");
-        String accessToken = response.body['access_token'];
-        String refreshToken = response.body['refresh_token'];
-
-        print('refreshToken: $refreshToken');
-
-        emailController.clear();
-        passwordController.clear();
-      }
-
-      _isLoading = false;
-      update();
+    Response? response = await authRepo.login(
+      mobileNumber: mobileNumberController
+          .text, // Fixed: Correct way to get text
+    );
+    if (response != null && response.statusCode == 200) {
+      // mobileNumberController.clear();
+      Get.toNamed(RouteHelper.getOtpVerifyRoute());
     } else {
       print('Invalid User');
     }
+
+    _isLoading = false;
+    update();
   }
+
+  Future<void> editProfile() async {
+    _hideKeyboard();
+    _isLoading = true;
+    update();
+
+    ProfileData? updateUserModel = await authRepo.getUserModel();
+    if (updateUserModel != null) {
+      ProfileData user = ProfileData(
+        id: updateUserModel.id,
+        firstname: firstNameController.text,
+        lastname: lastNameController.text,
+        email: emailController.text,
+        mobile: mobileNumberController.text,
+        gender: genderController.text,
+      );
+      final response = await authRepo.editProfile(user);
+      if (response != null && response.statusCode == 200) {
+        await getUserProfile(false);
+        Get.back();
+        customSnackBar("Profile Updated Successfully", isError: false);
+      } else {
+        customSnackBar("Failed to update profile", isError: true);
+      }
+    }
+
+    _isLoading = false;
+    update();
+  }
+
+
+  Future<void> getUserProfile(bool showLoading) async {
+    if (showLoading) {
+      _isLoading = true;
+      update();
+    }
+    Response? response = await authRepo.getProfile();
+    if (response != null && response.statusCode == 200) {
+      ProfileData userModel = ProfileData.fromJson(response.body);
+      firstNameController.text = userModel.firstname ?? "";
+      lastNameController.text = userModel.lastname ?? "";
+      emailController.text = userModel.email ?? "";
+      mobileNumberController.text = userModel.mobile ?? "";
+      genderController.text = userModel.gender ?? "";
+    } else {
+      customSnackBar("Failed to fetch profile", isError: true);
+    }
+    _isLoading = false;
+    update();
+  }
+
 
   //forgot password
   Future<void> forgetPasswordOTP({required String isVerifyEmail}) async {
@@ -258,7 +315,6 @@ class AuthController extends GetxController implements GetxService {
         final arguments = {
           'email': emailController.value.text,
         };
-
         _verificationCode = '';
         _otp = '';
         customSnackBar(response?.body['message'], isError: false);
@@ -266,7 +322,6 @@ class AuthController extends GetxController implements GetxService {
         //     arguments: arguments);
       }
     }
-
     _isLoading = false;
     update();
   }
@@ -274,7 +329,7 @@ class AuthController extends GetxController implements GetxService {
   String _verificationCode = '';
   String _otp = '';
 
-  String get otp => _otp;
+  // String get otp => _otp;
 
   String get verificationCode => _verificationCode;
 
@@ -343,45 +398,13 @@ class AuthController extends GetxController implements GetxService {
     return regex.hasMatch(password);
   }
 
-  Future<void> editProfile() async {
-    _hideKeyboard();
-    _isLoading = true;
-    update();
 
-    // UserModel? retrievedUserModel = await AuthRepo.getUserModel();
-    // if (retrievedUserModel != null) {
-    //   ProfileData user = ProfileData(
-    //     id: retrievedUserModel.id,
-    //     firstName: firstNameController.text,
-    //     lastName: lastNameController.text,
-    //     name: establishNameController.text,
-    //     countryId: countriesData?[0].id ?? "",
-    //     accountTypeId: restaurantIdController.text,
-    //     industry: selectedEstablishmentId,
-    //     email: establishEmailController.text,
-    //     mobile: establishContactController.text,
-    //     mobileDialCode: '+91',
-    //     isEstablishmentRequired: isEstablishment,
-    //     gstinNumber: gstinNumberController.text,
-    //   );
 
-    //   print("ESTABLISHMNET ID ${selectedEstablishment?.id}");
-    //   final response = await authRepo.editProfile(user);
 
-    //   if (response != null && response.statusCode == 200) {
-    //     await getUserProfile(false);
 
-    //     Get.back();
 
-    //     customSnackBar("Profile_Updated_Successfully".tr, isError: false);
-    //   }
-    // }
 
-    _isLoading = false;
-    update();
-  }
-
-  Timer? _refreshTokenTimer;
+Timer? _refreshTokenTimer;
 
   void startRefreshTokenTimer() {
     // Cancel any existing timer before starting a new one
