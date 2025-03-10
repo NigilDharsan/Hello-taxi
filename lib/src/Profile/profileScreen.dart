@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/utils/core/helper/route_helper.dart';
 import 'package:hellotaxi/utils/images.dart';
+import 'package:hellotaxi/utils/styles.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor:
             Color.lerp(Colors.indigo[700]!, Colors.indigo[800]!, 0.5),
@@ -28,12 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         title: const Text(
           'Profile',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: 'Arial white',
-          ),
+          style: con2Bold
         ),
       ),
       body: Stack(
@@ -65,16 +62,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 const Text(
                                   'Nigil', // Replace with dynamic user data
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style: nameBold,
                                 ),
                                 const SizedBox(height: 4.0),
                                 const Text(
                                   '8250214569',
                                   // Replace with dynamic user data
-                                  style: TextStyle(fontSize: 13),
+                                  style: ubuntuMedium,
                                 ),
                               ],
                             ),
@@ -88,11 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             alignment: Alignment.centerRight,
                             child: Text(
                               'Edit Profile',
-                              style: TextStyle(
-                                color: Colors.indigo,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                              ),
+                              style: ubuntuSemiBold,
                             ),
                           ),
                         ),
@@ -127,7 +117,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         _drawerItem(
                           icon: Icons.notifications,
                           text: 'Notifications',
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(RouteHelper.getNotificationRoute());
+                          },
                         ),
                         _drawerItem(
                           icon: Icons.privacy_tip,
@@ -152,6 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text(
                     'Version 1.1',
+                    style: ubuntuSemiBold,
                     textAlign: TextAlign.end,
                   ),
                 ],
@@ -185,10 +178,7 @@ Widget _drawerItem({
               const SizedBox(width: 10),
               Text(
                 text,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: ubuntuRegular,
               ),
             ],
           ),
@@ -207,21 +197,19 @@ void _showLogoutDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Logout'),
+        title: const Text('Logout',
+        style: logBold,),
         content:
-            const Text('Are you sure you want to logout this application?'),
+            const Text('Are you sure you want to logout this application?',
+              style: ubuntuMedium,),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text(
+            child: Text(
               'No',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: Colors.pink,
-              ),
+              style: ubuntuLight,
             ),
           ),
           TextButton(
@@ -230,11 +218,7 @@ void _showLogoutDialog(BuildContext context) {
             },
             child: const Text(
               'Confirm',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: Colors.pink,
-              ),
+              style: ubuntuLight,
             ),
           ),
         ],

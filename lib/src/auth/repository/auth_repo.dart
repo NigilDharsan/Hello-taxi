@@ -22,7 +22,7 @@ class AuthRepo {
   }
 
   Future<Response?> login(
-      {required String email, required String password}) async {
+      {  required String mobileNumber}) async {
     Map<String, String> headers = {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       'Accept': 'application/json',
@@ -34,9 +34,8 @@ class AuthRepo {
 
     var body = {
       "grant_type": "password",
-      "password": password,
+      "password": mobileNumber,
       "scope": "openid profile email byufuel-api offline_access",
-      "username": email
     };
 
     String encodedBody = body.entries

@@ -9,6 +9,10 @@ import 'package:hellotaxi/src/Dashboard/Widget/ChooseDropAndPickup/MainDesign.da
 import 'package:hellotaxi/src/Dashboard/Widget/DrawerPage.dart';
 import 'package:hellotaxi/src/RiderSearch/riderSearchScreen.dart';
 import 'package:location/location.dart' as loc;
+// import 'package:flutter/services.dart'; // Import this for SystemChrome
+
+import '../Rider Booking/bookingScreen.dart';
+import '../RiderHistory/rideCompleteDetails.dart';
 
 class Dashboardscreen extends StatefulWidget {
   const Dashboardscreen({super.key});
@@ -78,7 +82,6 @@ class _DashboardscreenState extends State<Dashboardscreen> {
           _currentPosition =
               LatLng(locationData.latitude!, locationData.longitude!);
         });
-
         mapController?.animateCamera(
           CameraUpdate.newLatLng(_currentPosition),
         );
@@ -114,12 +117,12 @@ class _DashboardscreenState extends State<Dashboardscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+
+  return WillPopScope(
       onWillPop: () async {
         final difference = DateTime.now().difference(timeBackPressed);
         final isExitWarning = difference >= const Duration(seconds: 2);
         timeBackPressed = DateTime.now();
-
         if (isExitWarning) {
           warningShown = false;
         }
@@ -149,15 +152,17 @@ class _DashboardscreenState extends State<Dashboardscreen> {
                 mapType: MapType.normal, // Options: normal, satellite, terrain
               ),
               Positioned(
-                  left: 20,
-                  right: 20,
-                  bottom: 40, // Ensures it stays at the bottom
+                  left: 0,
+                  right: 0,
+                  bottom: 0, // Ensures it stays at the bottom
                   child: Obx(() {
                     return controller.screenType.value == ""
                         ? MainDesign()
                         : controller.screenType.value == "Rider Search"
-                            ? RiderSearchScreen()
-                            : Cash_Screen();
+                        ? RiderSearchScreen()
+                        : controller.screenType.value == "booking screen"
+                        ? BookingScreen()
+                        : Cash_Screen();
                   })),
               Positioned(
                 top: MediaQuery.of(context).padding.top + 20,

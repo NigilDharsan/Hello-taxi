@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/src/auth/controller/auth_controller.dart';
 import 'package:hellotaxi/src/auth/repository/auth_repo.dart';
 import 'package:hellotaxi/utils/core/helper/route_helper.dart';
+import 'package:hellotaxi/utils/images.dart';
 
 import '../../../utils/overlay_loader_with_app_icon.dart';
 
@@ -86,6 +86,16 @@ class SplashScreenState extends State<SplashScreen> {
         body: Stack(
           children: [
             Container(),
+            Container(
+              width: MediaQuery.of(context).size.width * 2.5,
+              height: MediaQuery.of(context).size.height * 2.5,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Images.splashscreen),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             // Center(
             //   child: Padding(
             //     padding: const EdgeInsets.all(Dimensions.paddingSizeExtraLarge),
@@ -98,11 +108,11 @@ class SplashScreenState extends State<SplashScreen> {
             //           width: 200.0, // Set the width of the image
             //           height: 200.0, // Set the height of the image
             //         ),
-            //         // SvgPicture.asset(
-            //         //   Images.splash,
-            //         //   // color: Colors.white,
-            //         //   width: MediaQuery.of(context).size.width / 2.2,
-            //         // ),
+            //         SvgPicture.asset(
+            //           Images.splash,
+            //           // color: Colors.white,
+            //           width: MediaQuery.of(context).size.width / 2.2,
+            //         ),
             //       ],
             //     ),
             //   ),

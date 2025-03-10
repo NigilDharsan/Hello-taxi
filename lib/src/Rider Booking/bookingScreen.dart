@@ -1,8 +1,10 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hellotaxi/utils/core/helper/route_helper.dart';
 import 'package:hellotaxi/utils/images.dart';
+import 'package:hellotaxi/utils/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class BookingScreen extends StatefulWidget {
@@ -77,170 +79,204 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SlidingUpPanel(
-        controller: _panelController,
-        minHeight: 300, // Minimum height when collapsed
-        maxHeight:
-            MediaQuery.of(context).size.height * 0.6, // 60% of screen height
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(1)),
-        panel: _buildSlidingPanelContent(),
-      ),
-    );
-  }
 
-  Widget _buildSlidingPanelContent() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+
+  Widget build(BuildContext context) {
+    return SlidingUpPanel(
+      controller: _panelController,
+      minHeight: 300, // Minimum height when collapsed
+      maxHeight: MediaQuery.of(context).size.height * 0.9, // 90% of screen height
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
+      panel: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              color: Colors.grey[350],
-              child: const Padding(
-                padding: EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Text('PIN: ',
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
-                    Text('6598',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    Spacer(),
-                    Text('|',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    Spacer(),
-                    Text('On the way', style: TextStyle(fontSize: 15)),
-                  ],
+            // Drag Handle (Top Center)
+            Center(
+              child: Container(
+                margin: const EdgeInsets.only(top: 8, bottom: 12),
+                width: 60,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.grey[400],
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
 
-            // Vehicle Details
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              elevation: 0.7,
-              child: const Padding(
-                padding: EdgeInsets.all(15),
-                child: Row(
-                  children: [
-                    Text('TN 50 S 8684 -',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold)),
-                    SizedBox(width: 10),
-                    Text('Suzuki Swift (White)',
-                        style: TextStyle(fontSize: 15)),
-                  ],
+            // Distance & Arrival Time Card
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                color: Colors.grey[50],
+                elevation: 0.7,
+                child: const Padding(
+                  padding: EdgeInsets.all(15),
+                  child: Row(
+                    children: [
+                      Text('Distance ', style: change),
+                      Text('3.34 Km ', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                      SizedBox(width: 5),
+                      Text('|', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(width: 5),
+                      Text('Arrival Time', style: change),
+                      Text(' 9 min', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
                 ),
               ),
             ),
 
-            // Driver Details
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Image.asset(Images.user, width: 80, height: 80),
-                    const SizedBox(width: 10),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Nigil',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w500)),
-                        Text('Total Trips: 5', style: TextStyle(fontSize: 13)),
-                      ],
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      icon: Icon(Icons.call, color: Colors.green),
-                      onPressed: () {
-                        // WhatsApp action
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Route Details
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        Icon(Icons.location_on),
-                        SizedBox(width: 8),
-                        Text('Gandhipuram',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
-                      ],
-                    ),
-                    const Divider(),
-                    const Row(
-                      children: [
-                        Icon(Icons.location_on),
-                        SizedBox(width: 8),
-                        Text('Singanallur',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
-                      ],
-                    ),
-                    const Divider(),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton.icon(
-                        onPressed: () {
-                          // Cancel action
-                        },
-                        icon: const Icon(Icons.cancel_outlined),
-                        label: const Text('Cancel',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15)),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  // Car Details
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    color: Colors.grey[50],
+                    elevation: 0.7,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('TN 50 S 8684 -', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            SizedBox(width: 10),
+                            Text('Sedan', style: colorBold),
+                          ],
+                        ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
 
-            // Trip Fare
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: const Padding(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Trip Fare ₹50',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15)),
-                    SizedBox(height: 8),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Paid by', style: TextStyle(fontSize: 14)),
-                        Text('Cash', style: TextStyle(fontSize: 14)),
-                      ],
+                  // Driver Details
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    color: Colors.grey[50],
+                    elevation: 0.7,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Image.asset(Images.user, width: 80, height: 80),
+                          const SizedBox(width: 10),
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Nigil', style: nameBold),
+                              Text('Total Trip of driver: 23', style: change),
+                            ],
+                          ),
+                          const Spacer(),
+                          Card(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            child: IconButton(
+                              icon: const Icon(Icons.call, color: Colors.black, size: 25),
+                              onPressed: () {
+                                // Call action
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+
+                  // Route Details
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    color: Colors.grey[50],
+                    elevation: 0.7,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 5),
+                              Icon(Icons.location_on, color: Colors.green[900]),
+                              Text('Gandhipuram', style: ubuntuMedium),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const SizedBox(width: 15),
+                              DottedLine(
+                                direction: Axis.vertical,
+                                lineLength: 60,
+                                lineThickness: 2,
+                                dashLength: 6,
+                                dashGapLength: 4,
+                                dashColor: Colors.black,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(width: 5),
+                              Icon(Icons.location_on, color: Colors.red[900]),
+                              Text('Singanallur', style: ubuntuMedium),
+                            ],
+                          ),
+                          const Divider(),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton.icon(
+                              onPressed: () {
+                                // Cancel action
+                              },
+                              icon: const Icon(Icons.clear, size: 30, color: Colors.red),
+                              label: const Text('Cancel', style: colorBold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // Trip Fare Details
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    color: Colors.grey[50],
+                    elevation: 0.7,
+                    child: const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Trip Fare', style: tripBold),
+                              Text('₹111 - ₹157', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Distance', style: tripBold),
+                              Text('3.34 Km', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Payment Method', style: tripBold),
+                              Text('Cash', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

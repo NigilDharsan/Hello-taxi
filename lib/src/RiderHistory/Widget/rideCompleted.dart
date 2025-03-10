@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/utils/core/helper/route_helper.dart';
 import 'package:hellotaxi/utils/images.dart';
+import 'package:hellotaxi/utils/styles.dart';
 
 class RideCompleted extends StatefulWidget {
   const RideCompleted({super.key});
@@ -56,24 +57,20 @@ class _RideCompletedState extends State<RideCompleted> {
                                     children: [
                                       const Text(
                                         'Sat, Feb 22, 01:32 pm',
-                                        style: TextStyle(fontSize: 15),
+                                        style: ubuntuMedium,
                                       ),
                                       TextButton(
                                         onPressed: () {},
                                         child: const Text(
                                           "₹0.00",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                          style: rupees,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  const Text(
+                                 Text(
                                     'HT250222487414',
-                                    style: TextStyle(fontSize: 15),
+                                    style: textBold,
                                   ),
                                   const SizedBox(height: 18), // Added spacing
                                   Row(
@@ -82,11 +79,11 @@ class _RideCompletedState extends State<RideCompleted> {
                                     children: [
                                       const Text(
                                         'Sedan to',
-                                        style: TextStyle(fontSize: 15),
+                                        style: textBold,
                                       ),
                                       Image.asset(
-                                        Images.carimage,
-                                        width: 50, // Adjusted image size
+                                        Images.ubar,
+                                        width: 70, // Adjusted image size
                                         height: 50,
                                       ),
                                     ],
@@ -101,7 +98,7 @@ class _RideCompletedState extends State<RideCompleted> {
                                         // Only wrapping Text inside Expanded
                                         child: Text(
                                           'Singanallur Bus Stand',
-                                          style: const TextStyle(fontSize: 15),
+                                          style: logBold,
                                         ),
                                       ),
                                     ],

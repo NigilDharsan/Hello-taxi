@@ -8,56 +8,157 @@ const appPadding = 16.0;
 
 const ubuntuLight = TextStyle(
   fontFamily: 'Ubuntu',
-  fontWeight: FontWeight.w300,
+  fontWeight: FontWeight.bold,
 );
 
 const ubuntuRegular = TextStyle(
   fontFamily: 'Ubuntu',
   fontWeight: FontWeight.w400,
+  fontSize: 16,
+    color: Colors.black
 );
 
 const ubuntuMedium = TextStyle(
   fontFamily: 'Ubuntu',
   fontWeight: FontWeight.w500,
+  fontSize: 15,
+  color: Colors.black
 );
 
 const ubuntuBold = TextStyle(
   fontFamily: 'Ubuntu',
-  fontWeight: FontWeight.w700,
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+  fontSize: 16,
 );
 
+const colorBold = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.w500,
+  color: Colors.black,
+  fontSize: 14,
+);
+
+const rupees = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+  fontSize: 15,
+);
+
+const level = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.normal,
+  color: Colors.black,
+  fontSize: 15,
+);
+const conBold = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+  fontSize: 15,
+);
+const con2Bold = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.bold,
+  color: Colors.white,
+  fontSize: 18,
+);
+
+const nameBold = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+  fontSize: 15,
+);
+const change = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.w500,
+  color: Colors.black,
+  fontSize: 14,
+);
+
+const textBold = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.w500,
+  color: Colors.black,
+  fontSize: 14,
+);
+
+const vertical = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.w400,
+  color: Colors.black,
+  fontSize: 13,
+);
+const vertical1 = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.w400,
+  color: Colors.indigo,
+  fontSize: 13,
+);
+
+const text1Bold = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.bold,
+  color: Colors.indigo,
+  fontSize: 15,
+);
+const text2Bold = TextStyle(
+  fontFamily: 'Ubuntu',
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+  fontSize: 15,
+);
 const ubuntuSemiBold = TextStyle(
   fontFamily: 'Ubuntu',
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w500,
+  fontSize: 13
+);
+const normalBold = TextStyle(
+    fontFamily: 'Ubuntu',
+    fontWeight: FontWeight.w600,
+    fontSize: 13
 );
 
+
+const tripBold = TextStyle(
+    fontFamily: 'Ubuntu',
+    fontWeight: FontWeight.w400,
+    fontSize: 15
+);
+
+const logBold = TextStyle(
+    fontFamily: 'Ubuntu',
+    fontWeight: FontWeight.w500,
+    fontSize: 14
+);
 //List Number
 TextStyle List_No = TextStyle(
     fontFamily: 'Ubuntu',
     fontSize: 18,
     color: Color.fromRGBO(0, 0, 0, 1),
-    fontWeight: FontWeight.w300,
+    fontWeight: FontWeight.w400,
     fontStyle: FontStyle.italic);
 
 TextStyle List_No_noItaqlic = TextStyle(
-    fontFamily: 'Ubuntu',
-    fontSize: 18,
-    color: Color.fromRGBO(0, 0, 0, 1),
-    fontWeight: FontWeight.w300);
+    fontSize: 20,
+    color: Colors.black,
+    fontWeight: FontWeight.bold);
 
 //List Number
 TextStyle Card_T1 = TextStyle(
     fontFamily: 'Ubuntu',
-    fontSize: 18,
-    color: buttonColor,
-    fontWeight: FontWeight.w500);
+    fontSize: 12,
+    color: Colors.grey,
+    fontWeight: FontWeight.normal);
 
 //ITINERARY
-TextStyle itinerary_green_T = TextStyle(
+TextStyle delta = TextStyle(
     fontFamily: 'Ubuntu',
-    fontSize: 11.5,
-    color: buttonColor,
-    fontWeight: FontWeight.w500);
+    fontSize: 16,
+    color: Colors.black,
+    fontWeight: FontWeight.bold);
 
 TextStyle contain2 = TextStyle(
     fontFamily: 'Ubuntu',

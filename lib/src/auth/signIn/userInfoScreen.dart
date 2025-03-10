@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hellotaxi/utils/images.dart';
 
 import '../../../utils/core/helper/route_helper.dart';
+import '../../../utils/styles.dart';
 
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({super.key});
@@ -37,7 +38,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return InputDecoration(
       prefixIcon: Icon(icon, color: Colors.indigo, size: 24),
       hintText: hintText,
-      hintStyle: TextStyle(color: Colors.grey[400]),
+      hintStyle: ubuntuRegular,
       filled: true,
       fillColor: Colors.white,
       counterText: "",
@@ -82,7 +83,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   children: [
                     TextFormField(
                       controller: _firstnameController,
-                      style: const TextStyle(color: Colors.black),
+                      style: ubuntuRegular,
                       decoration: inputDecoration('First Name', Icons.person),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -94,7 +95,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     const SizedBox(height: 15), // Added spacing
                     TextFormField(
                       controller: _lastnameController,
-                      style: const TextStyle(color: Colors.black),
+                      style: ubuntuRegular,
                       decoration: inputDecoration('Last Name', Icons.person),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -106,7 +107,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     const SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
-                      height: 50,
+                      height: 60,
                       child: ElevatedButton(
                         onPressed: login,
                         style: ElevatedButton.styleFrom(
@@ -117,7 +118,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         ),
                         child: const Text(
                           'Submit',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: ubuntuBold,
                         ),
                       ),
                     ),

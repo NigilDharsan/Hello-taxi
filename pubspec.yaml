@@ -62,6 +62,7 @@ dependencies:
   flutter_polyline_points:
   flutter_typeahead:
   sliding_up_panel:
+  dotted_line:
 
 dev_dependencies:
   flutter_test:

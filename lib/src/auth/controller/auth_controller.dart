@@ -1,15 +1,19 @@
 import 'dart:async';
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hellotaxi/src/auth/repository/auth_repo.dart';
+import 'package:hellotaxi/utils/styles.dart';
 import 'package:hellotaxi/utils/widgets/custom_snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../Utils/core/helper/route_helper.dart';
+import 'package:http/http.dart' as http;
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
 
   AuthController({required this.authRepo});
+  final _formKey = GlobalKey<FormState>();
 
   String? _verificationId;
   bool _isOtpSent = false;
@@ -35,7 +39,7 @@ class AuthController extends GetxController implements GetxService {
   var lastNameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
-  var passwordController = TextEditingController();
+  var mobileNumberController = TextEditingController();
   var confirmPasswordController = TextEditingController();
   var address = TextEditingController();
   var preferLocation = TextEditingController();
@@ -165,7 +169,7 @@ class AuthController extends GetxController implements GetxService {
     lastNameController.text = '';
     emailController.text = '';
     phoneController.text = '';
-    passwordController.text = '';
+    mobileNumberController.text = '';
     confirmPasswordController.text = '';
     contactNumberController.text = '';
     newPasswordController.text = '';
@@ -190,7 +194,7 @@ class AuthController extends GetxController implements GetxService {
   }
 
   bool _isValidPassword() {
-    return passwordController.value.text ==
+    return mobileNumberController.value.text ==
         confirmPasswordController.value.text;
   }
 
@@ -223,26 +227,32 @@ class AuthController extends GetxController implements GetxService {
     _isLoading = true;
     update();
 
-    if (await validateUser(signInEmailController.text.trim())) {
+    if (_formKey.currentState!.validate()) {
       Response? response = await authRepo.login(
-          email: _emailAddress, password: signInPasswordController.value.text);
+        mobileNumber: mobileNumberController.text, // Fixed: Correct way to get text
+      );
+
       if (response != null && response.statusCode == 200) {
-        print("LOGIN RESPONSE ${response.body}");
-        String accessToken = response.body['access_token'];
-        String refreshToken = response.body['refresh_token'];
-
-        print('refreshToken: $refreshToken');
-
-        emailController.clear();
-        passwordController.clear();
+        mobileNumberController.clear();
+        Get.toNamed(RouteHelper.getOtpVerifyRoute());
+      } else {
+        print('Invalid User');
       }
-
-      _isLoading = false;
-      update();
     } else {
       print('Invalid User');
     }
+
+    _isLoading = false;
+    update();
   }
+
+
+
+
+
+
+
+
 
   //forgot password
   Future<void> forgetPasswordOTP({required String isVerifyEmail}) async {
@@ -258,7 +268,6 @@ class AuthController extends GetxController implements GetxService {
         final arguments = {
           'email': emailController.value.text,
         };
-
         _verificationCode = '';
         _otp = '';
         customSnackBar(response?.body['message'], isError: false);
@@ -266,7 +275,6 @@ class AuthController extends GetxController implements GetxService {
         //     arguments: arguments);
       }
     }
-
     _isLoading = false;
     update();
   }

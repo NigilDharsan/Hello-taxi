@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:get/get.dart';
@@ -46,7 +45,6 @@ class ApiClient extends GetxService {
       // printLog("-----getData response: ${response.body}");
       if (response.statusCode == 401 &&
           Get.find<AuthController>().isLoggedIn()) {}
-
       return response.body == ""
           ? handleResponse(response, uri)
           : handleLanguageResponse(response, uri);
@@ -106,7 +104,6 @@ class ApiClient extends GetxService {
     http.MultipartRequest request =
         http.MultipartRequest('POST', Uri.parse(appBaseUrl! + uri!));
     // request.headers.addAll(_mainHeaders);
-
     request.fields['receiver_id'] = receiverId;
     var stream = http.ByteStream(file.openRead())..cast();
     var length = await file.length();
@@ -114,7 +111,6 @@ class ApiClient extends GetxService {
         filename: basename(file.path));
     request.files.add(multipartFile);
     final data = await request.send();
-
     http.Response response = await http.Response.fromStream(data);
     return handleResponse(response, uri);
   }
@@ -129,7 +125,6 @@ class ApiClient extends GetxService {
       http.MultipartRequest request =
           http.MultipartRequest('POST', Uri.parse(appBaseUrl! + uri!));
       // request.headers.addAll(headers ?? _mainHeaders);
-
       if (otherFile != null) {
         Uint8List list = await otherFile.readAsBytes();
         var part = http.MultipartFile(
@@ -137,7 +132,6 @@ class ApiClient extends GetxService {
             filename: basename(otherFile.path));
         request.files.add(part);
       }
-
       if (multipartBody != null) {
         for (MultipartBody multipart in multipartBody) {
           File file = File(multipart.file.path);
@@ -149,7 +143,6 @@ class ApiClient extends GetxService {
           ));
         }
       }
-
       request.fields.addAll(body);
       http.Response response =
           await http.Response.fromStream(await request.send());
@@ -167,7 +160,6 @@ class ApiClient extends GetxService {
       //
     }
     String decodedResponse = utf8.decode(response.bodyBytes);
-
     Response response0 = Response(
       bodyBytes: Stream.fromIterable([response.bodyBytes]),
       body: body ?? response.body,
@@ -213,14 +205,11 @@ class ApiClient extends GetxService {
 
     if (response0.statusCode != 200 && response0.statusCode != 201) {
       String errorMessage = ErrorHandler.handleError(response0.body);
-
       print(errorMessage);
-
       if (response0.statusCode == 500) {
         var tokenExpiredHeader = response.headers['token-expired'];
         bool tokenExpired = tokenExpiredHeader != null &&
             tokenExpiredHeader.toLowerCase() == 'true';
-
         if (tokenExpired) {
           print("Token has expired");
         } else {
@@ -239,7 +228,6 @@ class ApiClient extends GetxService {
         customSnackBar(errorMessage, isError: true);
       }
     }
-
     return response0;
   }
 
@@ -252,7 +240,6 @@ class ApiClient extends GetxService {
     }
     String decodedResponse = utf8.decode(response.bodyBytes);
     final jsonData = json.decode(decodedResponse);
-
     Response response0 = Response(
       bodyBytes: Stream.fromIterable([response.bodyBytes]),
       body: jsonData, // ?? response.body,
@@ -265,7 +252,6 @@ class ApiClient extends GetxService {
       statusCode: response.statusCode,
       statusText: response.reasonPhrase,
     );
-
     try {
       if (response0.statusCode != 200 &&
           response0.body != null &&
@@ -290,22 +276,17 @@ class ApiClient extends GetxService {
       // Do something with the error message (e.g., display in UI, log it, etc.)
       print('Error: $errorMessage');
     }
-
     if (foundation.kDebugMode) {
       debugPrint(
           '====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
     }
-
     if (response0.statusCode != 200 && response0.statusCode != 201) {
       String errorMessage = ErrorHandler.handleError(response0.body);
-
       print(errorMessage);
-
       if (response0.statusCode == 500) {
         var tokenExpiredHeader = response.headers['token-expired'];
         bool tokenExpired = tokenExpiredHeader != null &&
             tokenExpiredHeader.toLowerCase() == 'true';
-
         if (tokenExpired) {
           print("Token has expired");
         } else {
@@ -324,7 +305,6 @@ class ApiClient extends GetxService {
         customSnackBar(errorMessage, isError: true);
       }
     }
-
     return response0;
   }
 }

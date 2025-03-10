@@ -1,4 +1,7 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+
+import '../../../utils/styles.dart';
 
 class RideCancelled extends StatefulWidget {
   const RideCancelled({super.key});
@@ -59,25 +62,20 @@ class _RideCancelledState extends State<RideCancelled> {
                               children: [
                                 const Text(
                                   'Sat, Feb 22, 1:30 pm ',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  style:  ubuntuMedium,
                                 ),
                                 Row(
                                   children: [
                                     Text(
                                       'Booking id: ',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                      style: vertical,
                                     ),
                                     Text(
                                       'HT2502222229047 ',
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
@@ -87,7 +85,7 @@ class _RideCancelledState extends State<RideCancelled> {
                             const Divider(),
                             const Row(
                               children: [
-                                Icon(Icons.location_on, color: Colors.red),
+                                Icon(Icons.location_on, color: Colors.red,size: 30,),
                                 SizedBox(width: 10),
                                 Expanded(
                                   child: Column(
@@ -98,10 +96,7 @@ class _RideCancelledState extends State<RideCancelled> {
                                         '91, Civil Aerodrome Post, Opp, CMC, \n'
                                         'Dr. Jaganathan Nagar, Coimbatore,\n'
                                         'Tamil Nadu 641014, India',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                        style: logBold,
                                       ),
                                     ],
                                   ),
@@ -109,16 +104,22 @@ class _RideCancelledState extends State<RideCancelled> {
                               ],
                             ),
                             const SizedBox(height: 1),
-                            Padding(
-                              padding: const EdgeInsets.all(13),
-                              child: CustomPaint(
-                                size: const Size(1, 25),
-                                painter: DottedLinePainter(),
-                              ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 15),
+                                DottedLine(
+                                  direction: Axis.vertical, // Set direction to vertical
+                                  lineLength: 50, // Length of the line
+                                  lineThickness: 2, // Thickness of the line
+                                  dashLength: 6, // Length of each dash
+                                  dashGapLength: 2, // Gap between dashes
+                                  dashColor: Colors.black, // Color of the dashes
+                                ),
+                              ],
                             ),
                             const Row(
                               children: [
-                                Icon(Icons.location_on, color: Colors.green),
+                                Icon(Icons.location_on, color: Colors.green,size: 30,),
                                 SizedBox(width: 10),
                                 Expanded(
                                   child: Column(
@@ -130,10 +131,7 @@ class _RideCancelledState extends State<RideCancelled> {
                                           'Avarampalayam Illango Nagar,\n'
                                           'Coimbatore,Tamil Nadu 641006,\n'
                                           'india',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w500,
-                                          )),
+                                          style: logBold),
                                     ],
                                   ),
                                 ),
@@ -151,9 +149,7 @@ class _RideCancelledState extends State<RideCancelled> {
                                     children: [
                                       Text(
                                         'Cancel Reason',
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w500),
+                                        style: vertical,
                                       ),
                                     ],
                                   ),
@@ -162,9 +158,7 @@ class _RideCancelledState extends State<RideCancelled> {
                                 const Column(
                                   children: [
                                     Text('Changed my plan',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500)),
+                                        style: logBold),
                                   ],
                                 ),
                               ],

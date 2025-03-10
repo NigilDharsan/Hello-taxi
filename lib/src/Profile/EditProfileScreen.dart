@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hellotaxi/utils/styles.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -85,14 +86,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
       hintText: hintText,
-      hintStyle: const TextStyle(
-        fontSize: 13,
-        color: Colors.grey,
-      ),
-      errorStyle: const TextStyle(
-        color: Colors.indigo,
-        fontSize: 14,
-      ),
+      hintStyle: vertical,
+      errorStyle: vertical1,
     );
   }
 
@@ -113,12 +108,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         title: const Text(
           'Edit Profile',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: 'Arial',
-          ),
+          style: ubuntuBold,
         ),
       ),
       body: SingleChildScrollView(
@@ -141,16 +131,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         children: [
                           Text(
                             'First Name',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: colorBold,
                           ),
                           SizedBox(width: 4.0),
                           Text(
                             '*',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 18,
                               color: Colors.indigo,
                             ),
                           ),
@@ -158,7 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 1),
+                  const SizedBox(height: 2),
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
@@ -183,7 +170,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 2),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -194,16 +181,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         children: [
                           Text(
                             'Last Name',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: colorBold,
                           ),
                           SizedBox(width: 4.0),
                           Text(
                             '*',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 18,
                               color: Colors.indigo,
                             ),
                           ),
@@ -211,7 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 1),
+                  const SizedBox(height: 2),
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
@@ -236,7 +220,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 2),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -247,16 +231,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         children: [
                           Text(
                             'Mobile Number',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: colorBold,
                           ),
                           SizedBox(width: 4.0),
                           Text(
                             '*',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 18,
                               color: Colors.indigo,
                             ),
                           ),
@@ -264,7 +245,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 2),
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
@@ -291,7 +272,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 2),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -302,16 +283,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         children: [
                           Text(
                             'Email',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: colorBold,
                           ),
                           SizedBox(width: 4.0),
                           Text(
                             '*',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 18,
                               color: Colors.indigo,
                             ),
                           ),
@@ -345,17 +323,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  // const SizedBox(height: 5),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: EdgeInsets.only(left: 17.0, bottom: 2),
                       child: Text(
                         'Gender',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: colorBold,
                       ),
                     ),
                   ),
@@ -380,7 +355,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   },
                                   activeColor: Colors.indigo,
                                 ),
-                                const Text('Male'),
+                                const Text('Male',style: ubuntuMedium,),
                               ],
                             ),
                           ),
@@ -401,7 +376,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   },
                                   activeColor: Colors.indigo,
                                 ),
-                                const Text('Female'),
+                                const Text('Female',style: ubuntuMedium,),
                               ],
                             ),
                           ),
@@ -429,10 +404,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                             child: const Text(
                               'Update',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontSize: 15),
+                              style: ubuntuBold,
                             ),
                           ),
                   )

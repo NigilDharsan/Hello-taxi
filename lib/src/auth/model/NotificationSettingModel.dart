@@ -1,4 +1,4 @@
-class NotificationSettingModel {
+  class NotificationSettingModel {
   String? extra;
   String? filter;
   List<Items>? items;

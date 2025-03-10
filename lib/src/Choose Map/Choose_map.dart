@@ -1,9 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hellotaxi/utils/styles.dart';
 import 'package:http/http.dart' as http;
 
 const String googleApiKey =
@@ -41,12 +41,7 @@ class _Choose_MapscreenState extends State<Choose_Mapscreen> {
           widget.isPickup
               ? 'Choose Rider Pickup Location'
               : 'Choose Rider Drop Location', // Dynamic title
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: 'Arial',
-          ),
+          style: ubuntuBold,
         ),
       ),
       body: Stack(
@@ -78,6 +73,7 @@ class _Choose_MapscreenState extends State<Choose_Mapscreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         hintText: 'Search for location',
+                        hintStyle: logBold
                       ),
                     );
                   },
@@ -131,10 +127,7 @@ class _Choose_MapscreenState extends State<Choose_Mapscreen> {
                   },
                   child: const Text(
                     'Continue',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
+                    style: ubuntuBold,
                   ),
                 ),
               ),

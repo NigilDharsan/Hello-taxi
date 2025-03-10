@@ -6,6 +6,9 @@ import 'package:hellotaxi/utils/core/helper/route_helper.dart';
 import 'package:hellotaxi/utils/images.dart';
 import 'package:hellotaxi/utils/widgets/loading_indicator.dart';
 
+import '../../../utils/styles.dart';
+import '../controller/auth_controller.dart';
+
 class OnboardScreen extends StatefulWidget {
   const OnboardScreen({super.key});
 
@@ -17,19 +20,20 @@ class _OnboardScreenState extends State<OnboardScreen> {
   final TextEditingController _mobileController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void login() {
-    if (_formKey.currentState!.validate()) {
-      // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(
-      //       builder: (context) => MobileOtpPage()), // Ensure `MapPage` exists
-      // );
-      Get.toNamed(RouteHelper.getOtpVerifyRoute());
-    }
-  }
+  // void login() {
+  //   if (_formKey.currentState!.validate()) {
+  //     // Navigator.of(context).pushReplacement(
+  //     //   MaterialPageRoute(
+  //     //       builder: (context) => MobileOtpPage()), // Ensure `MapPage` exists
+  //     // );
+  //     Get.toNamed(RouteHelper.getOtpVerifyRoute());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       // appBar: CustomAppBar(
       //   isBackButtonExist: widget.fromPage == "splash" || widget.fromPage == "onboard" ? false : true,
       //   bgColor: Theme.of(context).cardColor,
@@ -90,7 +94,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                         size: 24,
                       ),
                       hintText: 'Mobile Number',
-                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      hintStyle: ubuntuRegular,
                       filled: true,
                       fillColor: Colors.white,
                       counterText: "",
@@ -119,9 +123,11 @@ class _OnboardScreenState extends State<OnboardScreen> {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
-                    height: 50,
+                    height: 60,
                     child: ElevatedButton(
-                      onPressed: login,
+                      onPressed: () {
+                        Get.find<AuthController>().login();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.indigo[900],
                         shape: RoundedRectangleBorder(
@@ -130,7 +136,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                       ),
                       child: const Text(
                         'LOGIN',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: ubuntuBold,
                       ),
                     ),
                   ),
