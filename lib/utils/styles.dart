@@ -146,6 +146,11 @@ TextStyle List_No_noItaqlic = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.bold);
 
+TextStyle quality = TextStyle(
+    fontSize: 12,
+    color: Colors.indigo,
+    fontWeight: FontWeight.w400);
+
 //List Number
 TextStyle Card_T1 = TextStyle(
     fontFamily: 'Ubuntu',
