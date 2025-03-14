@@ -136,11 +136,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               // Space between text and value
                               Text(
                                 '3.34 Km',
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.080,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Card_T1,
                                 textAlign: TextAlign.center,
                               ),
                             ],
@@ -166,11 +162,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               // Space between text and value
                               Text(
                                 '9 min',
-                                style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.080,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style:Card_T1,
                                 textAlign: TextAlign.center,
                               ),
                             ],

@@ -147,16 +147,18 @@ TextStyle List_No_noItaqlic = TextStyle(
     fontWeight: FontWeight.bold);
 
 TextStyle quality = TextStyle(
-    fontSize: 12,
-    color: Colors.indigo,
-    fontWeight: FontWeight.w400);
+    fontSize:15,
+    color: Colors.grey,
+    fontWeight: FontWeight.w600);
+
 
 //List Number
 TextStyle Card_T1 = TextStyle(
     fontFamily: 'Ubuntu',
-    fontSize: 12,
-    color: Colors.grey,
-    fontWeight: FontWeight.normal);
+    fontSize: 22,
+    color: Colors.black,
+    fontWeight: FontWeight.bold
+);
 
 //ITINERARY
 TextStyle delta = TextStyle(
