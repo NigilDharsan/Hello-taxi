@@ -78,7 +78,6 @@ const change = TextStyle(
   fontSize: 14,
 );
 
-
 const textBold = TextStyle(
   fontFamily: 'Ubuntu',
   fontWeight: FontWeight.w500,
@@ -146,11 +145,6 @@ TextStyle List_No_noItaqlic = TextStyle(
     fontSize: 20,
     color: Colors.black,
     fontWeight: FontWeight.bold);
-
-TextStyle quality = TextStyle(
-    fontSize: 14,
-    color: Colors.black,
-    fontWeight: FontWeight.w400);
 
 //List Number
 TextStyle Card_T1 = TextStyle(
